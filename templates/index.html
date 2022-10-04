@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loyalty Points Management System</title>
+    <style>
+        .topnav {
+          background-color: #333;
+          overflow: hidden;
+        }
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 1s7px;
+        }
+        .topnav a.active {
+          background-color: #04AA6D;
+          color: white;
+        }
+        select {
+            width: 150px;
+            margin: 10px;
+        }
+        .badge_price {
+            background-color: deepskyblue;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .badge_loyalty_points {
+            background-color: springgreen;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="topnav">
+    <a class="active" href="/">Home</a>
+    <a href="/register">Register</a>
+    <a href="/login">Login</a>
+    <a href="/profile" style="float: right">User Profile</a>
+</div>
+
+<h1>Welcome to Loyalty Points Management System</h1>
+
+<form action="/" method="POST" id="form">
+    <select id="select_category" name="select_category" onchange="this.form.submit()">
+        {% for category in categories %}
+        <option
+                value={{category['id']}}>{{ category['name'] }}
+        </option>
+        {% endfor %}
+    </select>
+</form>
+
+{% block content %}
+{% for product in products %}
+<a href="#">
+    <h2>{{ product['name'] }}</h2>
+</a>
+<span class="badge_price">Price: {{ product['price'] }} Rs.</span>
+<span class="badge_loyalty_points">Loyalty Points: {{ product['loyalty_points'] }}</span>
+
+<span style="padding-left: 100px">
+            Quantity:
+            <select style="width: 50px" id="select_quantity{{ product['id'] }}" name="select_quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </span>
+<span class="badge_add_to_cart" style="padding-left: 10px">
+            <a onclick="add_to_cart({{ product['id'] }})" href="#">Add to Cart</a>
+        </span>
+<hr>
+{% endfor %}
+{% endblock %}
+
+<br/>
+<input style="background-color: crimson; padding: 10px"
+       type="button"
+       value="Place Order" onclick="placeorder()"/>
+
+<script>
+        var selected_category = '{{ selected_category }}';
+        console.log('selected_category:', selected_category);
+        console.log(document.getElementById("select_category"));
+        document.getElementById("select_category").value = selected_category;
+        function oncategorychange() {
+            console.log('oncategorychange');
+            d = document.getElementById("select_category").value;
+            alert(d);
+        }
+        function add_to_cart(product_id) {
+            console.log('product_id: ', product_id);
+            var quantity = document.getElementById("select_quantity" + product_id).value;
+            console.log('quantity: ', quantity);
+            window.location.href = '/add_to_cart?product_id=' + product_id + '&quantity=' + quantity;
+        }
+        function placeorder() {
+            window.location.href = '/place_order';
+        }
+
+</script>
+</body>
+</html>

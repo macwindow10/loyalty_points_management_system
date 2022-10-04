@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loyalty Points Management System</title>
+    <style>
+        .topnav {
+          background-color: #333;
+          overflow: hidden;
+        }
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+        .topnav a.active {
+          background-color: #04AA6D;
+          color: white;
+        }
+        select {
+            width: 150px;
+            margin: 10px;
+        }
+        .badge_price {
+            background-color: deepskyblue;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .badge_loyalty_points {
+            background-color: springgreen;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="topnav">
+    <a href="/">Home</a>
+    <a href="/register">Register</a>
+    <a class="active" href="/login">Login</a>
+    <a href="/profile" style="float: right">User Profile</a>
+</div>
+
+<h1>Welcome to Loyalty Points Management System</h1>
+<br/>
+<h2>Login</h2>
+<hr/>
+<form action="/login" method="POST" id="form" onsubmit="onSubmit()">
+    <div style="padding: 10px">
+        User Name <input type="text" id="username" name="username"/>
+    </div>
+    <div style="padding: 10px">
+        Password <input type="password" id="password" name="password"/>
+    </div>
+    <div style="padding: 10px">
+        <input type="submit" value="Login"/>
+        <a href="/resetpassword">Forget Password</a>
+    </div>
+</form>
+
+
+<script>
+        function onSubmit() {
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            console.log(username.value);
+            if (username.value.length === 0) {
+                alert('Enter username');
+                return false
+            }
+            if (password.value.length === 0) {
+                alert('Enter Password');
+                return false
+            }
+        }
+
+</script>
+</body>
+</html>
