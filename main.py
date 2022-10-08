@@ -18,6 +18,7 @@ def get_db_connection():
 def index():
     if not session.get("username"):
         print('user not logged in')
+        return redirect(url_for('login'))
     else:
         print('user logged in: ' + session.get("username"))
 
@@ -79,6 +80,12 @@ def login():
             return render_template('login.html')
     else:
         print('GET')
+    return render_template('login.html')
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.clear()
     return render_template('login.html')
 
 
