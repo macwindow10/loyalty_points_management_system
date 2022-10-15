@@ -142,9 +142,16 @@ def place_order():
         if not session.get("cart"):
             session["cart"] = []
 
-        total_loyalty_points = 0
-        order = '';
         conn = get_db_connection()
+        user = conn.execute(
+            'SELECT * FROM user WHERE id="{user_id}"'.
+                format(user_id=user_id)).fetchone()
+        existing_points = int(user["loyalty_points"])
+
+        total_loyalty_points = 0
+        product_price_quantity = 0
+        total_price = 0
+        order = '';
         cart = session["cart"]
         for i in range(len(cart)):
             # print(i, cart[i])
@@ -152,13 +159,23 @@ def place_order():
             quantity = cart[i][1]
             print(product_id, quantity)
             product = conn.execute('SELECT * FROM product WHERE id=' + product_id).fetchone()
-            total_loyalty_points = total_loyalty_points + product["loyalty_points"]
+            points = int(product["loyalty_points"]) * int(quantity)
+            total_loyalty_points = total_loyalty_points + points
+            product_price_quantity = (int(product["price"]) * int(quantity))
+            total_price = total_price + product_price_quantity
+
             order = order + 'Product: ' + product["name"] + \
                     ', Price: ' + str(product["price"]) + \
                     ', Quantity: ' + str(quantity) + \
-                    ', Loyalty Points: ' + str(product["loyalty_points"]) + '<br />'
+                    ', Sub Total: ' + str(product_price_quantity) + \
+                    ', Loyalty Points: ' + str(points) + '<br />'
 
-        conn.execute('UPDATE user set loyalty_points=? WHERE id=' + str(user_id),
+        order = order + 'Total Before Discount: ' + str(total_price) + '<br />'
+        discount = int((existing_points / 100) * 10)
+        total_price = total_price - discount
+        order = order + 'Total After Discount: ' + str(total_price) + '<br />'
+
+        conn.execute('UPDATE user set loyalty_points=loyalty_points + ? WHERE id=' + str(user_id),
                      (total_loyalty_points,))
         conn.commit()
         conn.close()
