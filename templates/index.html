@@ -90,7 +90,7 @@
 <br/>
 <input style="background-color: crimson; padding: 10px"
        type="button"
-       value="Place Order" onclick="placeorder()"/>
+       value="Checkout" onclick="checkout()"/>
 
 <script>
         var selected_category = '{{ selected_category }}';
@@ -108,8 +108,8 @@
             console.log('quantity: ', quantity);
             window.location.href = '/add_to_cart?product_id=' + product_id + '&quantity=' + quantity;
         }
-        function placeorder() {
-            window.location.href = '/place_order';
+        function checkout() {
+            window.location.href = '/checkout';
         }
 
 </script>

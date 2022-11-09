@@ -143,6 +143,33 @@ def add_to_cart():
     return redirect(url_for('index'))
 
 
+@app.route('/checkout', methods=['GET'])
+def checkout():
+    if not session.get("username"):
+        print('user not logged in')
+        return render_template('login.html')
+    else:
+        print('user logged in: ' + session.get("username"))
+        user_id = session["user_id"]
+        if not session.get("cart"):
+            session["cart"] = []
+
+        conn = get_db_connection()
+        order = ''
+        cart = session["cart"]
+        for i in range(len(cart)):
+            product_id = cart[i][0]
+            quantity = cart[i][1]
+            print(product_id, quantity)
+            product = conn.execute('SELECT * FROM product WHERE id=' + product_id).fetchone()
+
+            order = order + 'Product: ' + product["name"] + \
+                    ', Price: ' + str(product["price"]) + \
+                    ', Quantity: ' + str(quantity) + '<br />'
+
+    return render_template('checkout.html', order=order)
+
+
 @app.route('/place_order', methods=['GET'])
 def place_order():
     if not session.get("username"):
@@ -154,6 +181,8 @@ def place_order():
         if not session.get("cart"):
             session["cart"] = []
 
+        payment_method = request.args.get('payment_method', None)
+
         conn = get_db_connection()
         user = conn.execute(
             'SELECT * FROM user WHERE id="{user_id}"'.
@@ -163,7 +192,7 @@ def place_order():
         total_loyalty_points = 0
         product_price_quantity = 0
         total_price = 0
-        order = '';
+        order = ''
         cart = session["cart"]
         for i in range(len(cart)):
             # print(i, cart[i])
@@ -214,7 +243,11 @@ def profile():
         conn.close()
         print('user["loyalty_points"]: ', user["loyalty_points"])
         return render_template('profile.html',
-                               username=user["name"],
+                               username=user["username"],
+                               name=user["name"],
+                               dob=user["dob"],
+                               gender=user["gender"],
+                               address=user["address"],
                                total_loyalty_points=user["loyalty_points"])
 
 

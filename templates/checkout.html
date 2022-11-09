@@ -36,6 +36,8 @@
         }
 
 
+
+
     </style>
 </head>
 <body>
@@ -43,21 +45,37 @@
     <a href="/">Home</a>
     <a href="/register">Register</a>
     <a href="/login">Login</a>
-    <a class="active" href="/profile" style="float: right">User Profile</a>
+    <a href="/profile" style="float: right">User Profile</a>
 </div>
 
 <h1>Welcome to Loyalty Points Management System</h1>
 <br/>
-<h2>User Profile</h2>
+<h2>Checkout</h2>
 <hr/>
-<h4>Username: {{ username }}</h4>
-<h4>Full Name: {{ name }}</h4>
-<h4>DOB: {{ dob }}</h4>
-<h4>Gender: {{ gender }}</h4>
-<h4>Shipping Address: {{ address }}</h4>
-<h4>Total Loyalty Points Earned: {{ total_loyalty_points }}</h4>
+
+<h3>Order Details</h3>
+{{ order | safe }}
+
+<h3>Select Payment Method</h3>
+<p>
+    <input type="radio" name="payment_method" value="Cash On Delivery" checked="checked">Cash On Delivery</input>
+    <input type="radio" name="payment_method" value="Bank Transfer">Bank Transfer</input>
+</p>
+
 <br/>
+
+<input style="background-color: crimson; padding: 10px"
+       type="button"
+       value="Place Order" onclick="placeorder()"/>
+<br/><br/>
 <a href="/">Go To Home</a>
 
+<script>
+    function placeorder() {
+        window.location.href = '/place_order';
+    }
+
+
+</script>
 </body>
 </html>
