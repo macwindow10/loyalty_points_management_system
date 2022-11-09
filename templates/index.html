@@ -35,6 +35,7 @@
             padding: 5px;
         }
 
+
     </style>
 </head>
 <body>
@@ -60,9 +61,12 @@
 
 {% block content %}
 {% for product in products %}
-<a href="#">
-    <h2>{{ product['name'] }}</h2>
-</a>
+<div>
+    <img src="/static/images/{{ product['image_path'] }}" alt="{{ product['name'] }}" style="width: 100px;" />
+    <a href="#" style="font-size:24px">
+        {{ product['name'] }}
+    </a>
+</div>
 <span class="badge_price">Price: {{ product['price'] }} Rs.</span>
 <span class="badge_loyalty_points">Loyalty Points: {{ product['loyalty_points'] }}</span>
 
@@ -107,6 +111,7 @@
         function placeorder() {
             window.location.href = '/place_order';
         }
+
 </script>
 </body>
 </html>

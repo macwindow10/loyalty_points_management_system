@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session
 from flask_session import Session
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -50,15 +50,27 @@ def register():
         print('POST')
         username = request.form.get('username', None)
         password = request.form.get('password', None)
+        name = request.form.get('name', None)
+        dob = request.form.get('dob', None)
+        gender = request.form.get('gender', None)
+        address = request.form.get('address', None)
         conn = get_db_connection()
-        conn.execute('INSERT INTO user (name, password, loyalty_points) VALUES(?,?,?)',
-                     (username, password, 0))
-        conn.commit()
-        conn.close()
-        return render_template('login.html')
+        user = conn.execute(
+            'SELECT * FROM user WHERE username="{username}"'.format(username=username, )).fetchone()
+        if user:
+            print('user already exists')
+            conn.close()
+            return render_template('register.html', message='user already exists')
+        else:
+            conn.execute(
+                'INSERT INTO user (username, password, name, dob, gender, address, loyalty_points) VALUES(?,?,?,?,?,?,?)',
+                (username, password, name, dob, gender, address, 0))
+            conn.commit()
+            conn.close()
+        return render_template('login.html', message='user registered successfully')
     else:
         print('GET')
-    return render_template('register.html')
+    return render_template('register.html', message='')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -69,7 +81,7 @@ def login():
         password = request.form.get('password', None)
         conn = get_db_connection()
         user = conn.execute(
-            'SELECT * FROM user WHERE name="{username}" AND password="{password}"'.
+            'SELECT * FROM user WHERE username="{username}" AND password="{password}"'.
                 format(username=username, password=password)).fetchone()
         conn.close()
         if user:
@@ -97,10 +109,10 @@ def resetpassword():
         password = request.form.get('password', None)
         conn = get_db_connection()
         user = conn.execute(
-            'SELECT * FROM user WHERE name="{username}"'.
+            'SELECT * FROM user WHERE username="{username}"'.
                 format(username=username)).fetchone()
         if user:
-            conn.execute('UPDATE user SET password="{password}" WHERE name="{username}"'
+            conn.execute('UPDATE user SET password="{password}" WHERE username="{username}"'
                          .format(password=password, username=username))
             conn.commit()
         conn.close()
