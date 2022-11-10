@@ -79,6 +79,12 @@ def login():
         print('POST')
         username = request.form.get('username', None)
         password = request.form.get('password', None)
+
+        if username == 'admin' and password == 'admin':
+            session["username"] = username
+            session["user_id"] = 0
+            return redirect(url_for('adminpanel'))
+
         conn = get_db_connection()
         user = conn.execute(
             'SELECT * FROM user WHERE username="{username}" AND password="{password}"'.
@@ -249,6 +255,18 @@ def profile():
                                gender=user["gender"],
                                address=user["address"],
                                total_loyalty_points=user["loyalty_points"])
+
+
+@app.route('/adminpanel', methods=['GET'])
+def adminpanel():
+    print('adminpanel')
+    conn = get_db_connection()
+    products = conn.execute('SELECT c.name cname, p.name pname, p.price, p.loyalty_points, p.image_path '
+                            'FROM product p INNER JOIN category c '
+                            'ON p.category_id=c.id '
+                            'ORDER BY c.id').fetchall()
+    conn.close()
+    return render_template('adminpanel.html', products=products)
 
 
 if __name__ == '__main__':
