@@ -293,7 +293,7 @@ def add_new_product():
         price = request.form.get('price', None)
         loyalty_points = request.form.get('loyalty_points', None)
         product_image = request.files['product_image']
-        product_image.save(os.path.join('/static/images/', product_image.filename))
+        product_image.save(os.path.join('static/images', product_image.filename))
 
     return render_template('addnewproduct.html', categories=categories)
 
