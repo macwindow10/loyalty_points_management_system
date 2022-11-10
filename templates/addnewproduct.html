@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loyalty Points Management System</title>
+    <style>
+        .topnav {
+          background-color: #333;
+          overflow: hidden;
+        }
+        .topnav a {
+          float: left;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 1s7px;
+        }
+        .topnav a.active {
+          background-color: #04AA6D;
+          color: white;
+        }
+        select {
+            width: 150px;
+            margin: 10px;
+        }
+        .badge_category {
+            background-color: grey;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .badge_product {
+            background-color: lightpink;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .badge_price {
+            background-color: deepskyblue;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .badge_loyalty_points {
+            background-color: springgreen;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="topnav">
+    <a href="/logout" onclick="logout()">Logout</a>
+</div>
+
+<h1>Loyalty Points Management System - Administrator Panel</h1>
+
+<h2>Add New Product</h2>
+
+<form action="/add_new_product" method="POST" id="form"
+      enctype = "multipart/form-data"
+      onsubmit="return onSubmit()">
+
+    <select id="select_category" name="select_category">
+        {% for category in categories %}
+        <option
+                value={{category['id']}}>{{ category['name'] }}
+        </option>
+        {% endfor %}
+    </select>
+    <div style="padding: 10px">
+        Product Name <input type="text" id="name" name="name"/>
+    </div>
+    <div style="padding: 10px">
+        Price <input type="number" id="price" name="price"/>
+    </div>
+    <div style="padding: 10px">
+        Loyalty Points <input type="number" id="loyalty_points" name="loyalty_points" value="0"/>
+    </div>
+    <div style="padding: 10px">
+        Product Image <input type="file" id="product_image" name="product_image"/>
+    </div>
+
+    <div style="padding: 10px">
+        <input type="submit" value="Save"/>
+    </div>
+</form>
+
+<script>
+        function onSubmit() {
+            var name = document.getElementById("name");
+            var price = document.getElementById("price");
+            console.log(name.value);
+            if (name.value.length === 0) {
+                alert('Enter product name');
+                return false
+            }
+            if (price.value.length === 0) {
+                alert('Enter product price');
+                return false
+            }
+        }
+</script>
+</body>
+</html>

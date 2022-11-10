@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request, session
 from flask_session import Session
 import sqlite3
@@ -5,6 +6,9 @@ import sqlite3
 app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['UPLOAD_FOLDER'] = '/static/images'
+app.config['MAX_CONTENT_PATH'] = 1024 * 1024 * 1024
+
 Session(app)
 
 
@@ -267,6 +271,31 @@ def adminpanel():
                             'ORDER BY c.id').fetchall()
     conn.close()
     return render_template('adminpanel.html', products=products)
+
+
+@app.route('/add_new_product', methods=['GET', 'POST'])
+def add_new_product():
+    print('add_new_product')
+    if not session.get("username"):
+        print('user not logged in')
+        return redirect(url_for('login'))
+    else:
+        print('user logged in: ' + session.get("username"))
+
+    conn = get_db_connection()
+    categories = conn.execute('SELECT * FROM category').fetchall()
+    conn.close()
+
+    if request.method == 'POST':
+        print('POST')
+        selected_category = request.form.get('select_category', None)
+        product_name = request.form.get('name', None)
+        price = request.form.get('price', None)
+        loyalty_points = request.form.get('loyalty_points', None)
+        product_image = request.files['product_image']
+        product_image.save(os.path.join('/static/images/', product_image.filename))
+
+    return render_template('addnewproduct.html', categories=categories)
 
 
 if __name__ == '__main__':

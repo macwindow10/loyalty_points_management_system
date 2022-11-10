@@ -77,27 +77,9 @@
 {% endblock %}
 
 <script>
-        var selected_category = '{{ selected_category }}';
-        console.log('selected_category:', selected_category);
-        console.log(document.getElementById("select_category"));
-        document.getElementById("select_category").value = selected_category;
-        function oncategorychange() {
-            console.log('oncategorychange');
-            d = document.getElementById("select_category").value;
-            alert(d);
+        function add_new_product() {
+            window.location.href = '/add_new_product';
         }
-        function add_to_cart(product_id) {
-            console.log('product_id: ', product_id);
-            var quantity = document.getElementById("select_quantity" + product_id).value;
-            console.log('quantity: ', quantity);
-            window.location.href = '/add_to_cart?product_id=' + product_id + '&quantity=' + quantity;
-        }
-        function checkout() {
-            window.location.href = '/checkout';
-        }
-
-
-
 </script>
 </body>
 </html>
