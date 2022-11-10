@@ -295,6 +295,13 @@ def add_new_product():
         product_image = request.files['product_image']
         product_image.save(os.path.join('static/images', product_image.filename))
 
+        conn = get_db_connection()
+        conn.execute(
+            'INSERT INTO product (category_id, price, loyalty_points, name, image_path) VALUES(?,?,?,?,?)',
+            (selected_category, price, loyalty_points, product_name, product_image.filename))
+        conn.commit()
+        conn.close()
+
     return render_template('addnewproduct.html', categories=categories)
 
 
