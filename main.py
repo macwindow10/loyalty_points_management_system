@@ -167,10 +167,14 @@ def checkout():
     else:
         print('user logged in: ' + session.get("username"))
         user_id = session["user_id"]
+        conn = get_db_connection()
+        user = conn.execute(
+            'SELECT * FROM user WHERE id="{user_id}"'.
+                format(user_id=user_id)).fetchone()
         if not session.get("cart"):
             session["cart"] = []
 
-        conn = get_db_connection()
+        #conn = get_db_connection()
         order = ''
         cart = session["cart"]
         if len(cart) == 0:
@@ -187,7 +191,7 @@ def checkout():
                     ', Price: ' + str(product["price"]) + \
                     ', Quantity: ' + str(quantity) + '<br />'
 
-    return render_template('checkout.html', order=order)
+    return render_template('checkout.html', order=order, user=user)
 
 
 @app.route('/clearcart', methods=['GET'])

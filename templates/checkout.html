@@ -38,6 +38,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -54,13 +55,23 @@
 <hr/>
 
 <h3>Order Details</h3>
+----------------------------------------------------
+<br/>
 {{ order | safe }}
-<br /><br /><br />
+<br/><br/>
 
 <h3>Shipping Address</h3>
-<br /><br /><br />
+----------------------------------------------------
+<br/>
+Name: <b>{{ user.name }}</b>
+<br/>
+Address: <b>{{ user.address }}</b>
+<br/><br/>
+
 
 <h3>Select Payment Method</h3>
+----------------------------------------------------
+<br/>
 <p>
     <input type="radio" name="payment_method" value="Cash On Delivery" checked="checked">Cash On Delivery</input>
     <input type="radio" name="payment_method" value="Bank Transfer">Bank Transfer</input>
@@ -78,8 +89,6 @@
     function placeorder() {
         window.location.href = '/place_order';
     }
-
-
 </script>
 </body>
 </html>
