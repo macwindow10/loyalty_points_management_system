@@ -66,6 +66,8 @@
 Name: <b>{{ user.name }}</b>
 <br/>
 Address: <b>{{ user.address }}</b>
+<br/>
+Contact Number (03003334444): <input type="text" id="contact" name="contact" />
 <br/><br/>
 
 
@@ -87,6 +89,15 @@ Address: <b>{{ user.address }}</b>
 
 <script>
     function placeorder() {
+        contact = document.getElementById("contact");
+        if (contact.value.length === 0) {
+            alert('Enter contact number');
+            return false
+        }
+        if (contact.value.length !== 11) {
+            alert('Invalid contact number');
+            return false
+        }
         window.location.href = '/place_order';
     }
 </script>

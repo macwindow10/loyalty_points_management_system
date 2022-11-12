@@ -86,6 +86,8 @@
         function onSubmit() {
             var username = document.getElementById("username");
             var password = document.getElementById("password");
+            var name = document.getElementById("name");
+            var address = document.getElementById("address");
             console.log(username.value);
             if (username.value.length === 0) {
                 alert('Enter username');
@@ -93,6 +95,14 @@
             }
             if (password.value.length < 6) {
                 alert('Password must be at-least six characters');
+                return false
+            }
+            if (name.value.length === 0) {
+                alert('Enter full name');
+                return false
+            }
+            if (address.value.length === 0) {
+                alert('Enter address');
                 return false
             }
         }
