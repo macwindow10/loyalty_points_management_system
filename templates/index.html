@@ -36,6 +36,9 @@
         }
 
 
+
+
+
     </style>
 </head>
 <body>
@@ -48,6 +51,12 @@
 </div>
 
 <h1>Welcome to Loyalty Points Management System</h1>
+
+{% block message %}
+{% if message != '' %}
+<div style="color: red; padding: 10px">* {{ message }}</div>
+{% endif %}
+{% endblock message %}
 
 <form action="/" method="POST" id="form">
     <select id="select_category" name="select_category" onchange="this.form.submit()">
@@ -62,7 +71,7 @@
 {% block content %}
 {% for product in products %}
 <div>
-    <img src="/static/images/{{ product['image_path'] }}" alt="{{ product['name'] }}" style="width: 100px;" />
+    <img src="/static/images/{{ product['image_path'] }}" alt="{{ product['name'] }}" style="width: 100px;"/>
     <a href="#" style="font-size:24px">
         {{ product['name'] }}
     </a>
@@ -91,6 +100,9 @@
 <input style="background-color: crimson; padding: 10px"
        type="button"
        value="Checkout" onclick="checkout()"/>
+<input style="padding: 10px"
+       type="button"
+       value="Clear Cart" onclick="clearcart()"/>
 
 <script>
         var selected_category = '{{ selected_category }}';
@@ -111,7 +123,9 @@
         function checkout() {
             window.location.href = '/checkout';
         }
-
+        function clearcart() {
+            window.location.href = '/clearcart';
+        }
 </script>
 </body>
 </html>

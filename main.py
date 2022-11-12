@@ -43,7 +43,12 @@ def index():
     products = conn.execute('SELECT * FROM product WHERE category_id=' + selected_category).fetchall()
     conn.close()
 
+    message = ''
+    if session.get("message"):
+        message = session.get("message")
+        session.pop("message")
     return render_template('index.html',
+                           message=message,
                            selected_category=selected_category,
                            categories=categories, products=products)
 
@@ -136,6 +141,7 @@ def resetpassword():
 def add_to_cart():
     if not session.get("username"):
         print('user not logged in')
+        session["message"] = 'user not logged in'
         return render_template('login.html')
     else:
         print('user logged in: ' + session.get("username"))
@@ -167,6 +173,10 @@ def checkout():
         conn = get_db_connection()
         order = ''
         cart = session["cart"]
+        if len(cart) == 0:
+            session["message"] = 'cart is empty'
+            return redirect(url_for('index'))
+
         for i in range(len(cart)):
             product_id = cart[i][0]
             quantity = cart[i][1]
@@ -178,6 +188,13 @@ def checkout():
                     ', Quantity: ' + str(quantity) + '<br />'
 
     return render_template('checkout.html', order=order)
+
+
+@app.route('/clearcart', methods=['GET'])
+def clearcart():
+    # clear cart after saving order in database
+    session["cart"] = []
+    return redirect(url_for('index'))
 
 
 @app.route('/place_order', methods=['GET'])
