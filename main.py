@@ -265,7 +265,7 @@ def profile():
 def adminpanel():
     print('adminpanel')
     conn = get_db_connection()
-    products = conn.execute('SELECT c.name cname, p.name pname, p.price, p.loyalty_points, p.image_path '
+    products = conn.execute('SELECT c.name cname, p.id pid, p.name pname, p.price, p.loyalty_points, p.image_path '
                             'FROM product p INNER JOIN category c '
                             'ON p.category_id=c.id '
                             'ORDER BY c.id').fetchall()
@@ -282,10 +282,6 @@ def add_new_product():
     else:
         print('user logged in: ' + session.get("username"))
 
-    conn = get_db_connection()
-    categories = conn.execute('SELECT * FROM category').fetchall()
-    conn.close()
-
     if request.method == 'POST':
         print('POST')
         selected_category = request.form.get('select_category', None)
@@ -301,8 +297,22 @@ def add_new_product():
             (selected_category, price, loyalty_points, product_name, product_image.filename))
         conn.commit()
         conn.close()
+        return redirect(url_for('adminpanel'))
 
+    conn = get_db_connection()
+    categories = conn.execute('SELECT * FROM category').fetchall()
+    conn.close()
     return render_template('addnewproduct.html', categories=categories)
+
+
+@app.route('/delete_product', methods=['GET'])
+def delete_product():
+    print('delete_product')
+    pid = request.args.get('id')
+    conn = get_db_connection()
+    conn.execute('DELETE FROM product WHERE id=' + pid)
+    conn.commit()
+    return redirect(url_for('adminpanel'))
 
 
 if __name__ == '__main__':

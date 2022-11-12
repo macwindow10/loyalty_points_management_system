@@ -44,8 +44,6 @@
             border-radius: 5px;
             padding: 5px;
         }
-
-
     </style>
 </head>
 <body>
@@ -57,7 +55,7 @@
 
 <h2>Products</h2>
 
-<input style="background-color: crimson; padding: 5px"
+<input style="padding: 5px"
        type="button"
        value="Add New Product" onclick="add_new_product()"/>
 <br/><br/>
@@ -70,6 +68,9 @@
     <span class="badge_product">Product Name: {{ product['pname'] }}</span>
     <span class="badge_price">Price: {{ product['price'] }} Rs.</span>
     <span class="badge_loyalty_points">Loyalty Points: {{ product['loyalty_points'] }}</span>
+
+    <span class="badge_delete"><input type="button" onclick="delete_product({{ product['pid'] }})" value="DELETE PRODUCT" /></span>
+
 </div>
 
 <hr>
@@ -79,6 +80,9 @@
 <script>
         function add_new_product() {
             window.location.href = '/add_new_product';
+        }
+        function delete_product(id) {
+            window.location.href = '/delete_product?id=' + id;
         }
 </script>
 </body>
