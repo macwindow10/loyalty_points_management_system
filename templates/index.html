@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <title>Loyalty Points Management System</title>
     <style>
         .topnav {
@@ -20,10 +22,6 @@
           background-color: #04AA6D;
           color: white;
         }
-        select {
-            width: 150px;
-            margin: 10px;
-        }
         .badge_price {
             background-color: deepskyblue;
             border-radius: 5px;
@@ -34,8 +32,6 @@
             border-radius: 5px;
             padding: 5px;
         }
-
-
 
 
 
@@ -50,7 +46,7 @@
     <a href="/profile" style="float: right">User Profile</a>
 </div>
 
-<h1>Welcome to Loyalty Points Management System</h1>
+<h2>Welcome to Loyalty Points Management System</h2>
 
 {% block message %}
 {% if message != '' %}
@@ -59,29 +55,33 @@
 {% endblock message %}
 
 <form action="/" method="POST" id="form">
-    <select id="select_category" name="select_category" onchange="this.form.submit()">
-        {% for category in categories %}
-        <option
-                value={{category['id']}}>{{ category['name'] }}
-        </option>
-        {% endfor %}
-    </select>
+    <div class="form-group m-2">
+        <label>Product Category</label>
+        <select id="select_category" name="select_category"
+                onchange="this.form.submit()" class="form-control">
+            {% for category in categories %}
+            <option
+                    value={{category['id']}}>{{ category['name'] }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
 </form>
 
 {% block content %}
 {% for product in products %}
-<div>
-    <img src="/static/images/{{ product['image_path'] }}" alt="{{ product['name'] }}" style="width: 100px;"/>
-    <a href="#" style="font-size:24px">
-        {{ product['name'] }}
-    </a>
-</div>
-<span class="badge_price">Price: {{ product['price'] }} Rs.</span>
-<span class="badge_loyalty_points">Loyalty Points: {{ product['loyalty_points'] }}</span>
+<div class="card p-0 m-2">
+    <div class="card-body">
+        <div>
+            <img src="/static/images/{{ product['image_path'] }}" alt="{{ product['name'] }}" style="width: 100px;"/>
+            <h5 class="card-title">{{ product['name'] }}</h5>
+        </div>
+        <span class="badge badge-info">Price: {{ product['price'] }} Rs.</span>
+        <span class="badge badge-success">Loyalty Points: {{ product['loyalty_points'] }}</span>
 
-<span style="padding-left: 100px">
+        <span style="padding-left: 100px">
             Quantity:
-            <select style="width: 50px" id="select_quantity{{ product['id'] }}" name="select_quantity">
+            <select class="dropdown" id="select_quantity{{ product['id'] }}" name="select_quantity">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -89,18 +89,20 @@
                 <option value="5">5</option>
             </select>
         </span>
-<span class="badge_add_to_cart" style="padding-left: 10px">
-            <a onclick="add_to_cart({{ product['id'] }})" href="#">Add to Cart</a>
+        <span style="padding-left: 10px">
+            <a onclick="add_to_cart({{ product['id'] }})" href="#"
+               class="btn btn-primary">Add to Cart</a>
         </span>
-<hr>
+    </div>
+</div>
 {% endfor %}
 {% endblock %}
 
 <br/>
-<input style="background-color: crimson; padding: 10px"
+<input class="btn btn-primary m-2"
        type="button"
        value="Checkout" onclick="checkout()"/>
-<input style="padding: 10px"
+<input class="btn btn-warning m-2"
        type="button"
        value="Clear Cart" onclick="clearcart()"/>
 
@@ -126,6 +128,8 @@
         function clearcart() {
             window.location.href = '/clearcart';
         }
+
+
 </script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <title>Loyalty Points Management System</title>
     <style>
         .topnav {
@@ -20,10 +22,6 @@
           background-color: #04AA6D;
           color: white;
         }
-        select {
-            width: 150px;
-            margin: 10px;
-        }
         .badge_price {
             background-color: deepskyblue;
             border-radius: 5px;
@@ -35,6 +33,7 @@
             padding: 5px;
         }
 
+
     </style>
 </head>
 <body>
@@ -45,15 +44,16 @@
     <a href="/profile" style="float: right">User Profile</a>
 </div>
 
-<h1>Welcome to Loyalty Points Management System</h1>
+<h2>Welcome to Loyalty Points Management System</h2>
 <br/>
-<h2>Order Details</h2>
-{{ order | safe }}
-<hr/>
-<h3>Order Placed Successfully</h3>
-<br/>
-<h3>Total Loyalty Points Earned: {{ total_loyalty_points }}</h3>
-<a href="/">Go To Home</a>
-
+<h3>Order Details</h3>
+<div class="m-2">
+    {{ order | safe }}
+    <hr/>
+    <h4>Order Placed Successfully</h4>
+    <br/>
+    <h4>Total Loyalty Points Earned: {{ total_loyalty_points }}</h4>
+    <a href="/" class="btn btn-primary">Go To Home</a>
+</div>
 </body>
 </html>

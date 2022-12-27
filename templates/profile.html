@@ -36,6 +36,8 @@
             border-radius: 5px;
             padding: 5px;
         }
+
+
     </style>
 </head>
 <body>
@@ -50,14 +52,17 @@
 <br/>
 <h3>User Profile</h3>
 <hr/>
-<h4>Username: {{ username }}</h4>
-<h4>Full Name: {{ name }}</h4>
-<h4>DOB: {{ dob }}</h4>
-<h4>Gender: {{ gender }}</h4>
-<h4>Shipping Address: {{ address }}</h4>
-<h4>Total Loyalty Points Earned: {{ total_loyalty_points }}</h4>
-<br/>
-<a href="/" class="btn btn-primary">Go To Home</a>
+<div class="m-2">
+    <h5>Username: {{ username }}</h5>
+    <h5>Full Name: {{ name }}</h5>
+    <h5>DOB: {{ dob }}</h5>
+    <h5>Gender: {{ gender }}</h5>
+    <h5>Shipping Address: {{ address }}</h5>
+    <h5>Total Loyalty Points Earned: {{ total_loyalty_points }}</h5>
+
+    <br/>
+    <a href="/" class="btn btn-primary">Go To Home</a>
+</div>
 
 </body>
 </html>

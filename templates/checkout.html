@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <title>Loyalty Points Management System</title>
     <style>
         .topnav {
@@ -20,10 +22,6 @@
           background-color: #04AA6D;
           color: white;
         }
-        select {
-            width: 150px;
-            margin: 10px;
-        }
         .badge_price {
             background-color: deepskyblue;
             border-radius: 5px;
@@ -36,9 +34,6 @@
         }
 
 
-
-
-
     </style>
 </head>
 <body>
@@ -49,43 +44,46 @@
     <a href="/profile" style="float: right">User Profile</a>
 </div>
 
-<h1>Welcome to Loyalty Points Management System</h1>
+<h2>Welcome to Loyalty Points Management System</h2>
 <br/>
-<h2>Checkout</h2>
+<h3>Checkout</h3>
 <hr/>
 
-<h3>Order Details</h3>
-----------------------------------------------------
-<br/>
-{{ order | safe }}
-<br/><br/>
+<div class="m-2">
 
-<h3>Shipping Address</h3>
-----------------------------------------------------
-<br/>
-Name: <b>{{ user.name }}</b>
-<br/>
-Address: <b>{{ user.address }}</b>
-<br/>
-Contact Number (03003334444): <input type="text" id="contact" name="contact" />
-<br/><br/>
+    <h4>Order Details</h4>
+    ----------------------------------------------------
+    <br/>
+    {{ order | safe }}
+    <br/><br/>
+
+    <h4>Shipping Address</h4>
+    ----------------------------------------------------
+    <br/>
+    Name: <b>{{ user.name }}</b>
+    <br/>
+    Address: <b>{{ user.address }}</b>
+    <br/>
+    Contact Number (03003334444): <input type="text" id="contact" name="contact"/>
+    <br/><br/>
 
 
-<h3>Select Payment Method</h3>
-----------------------------------------------------
-<br/>
-<p>
-    <input type="radio" name="payment_method" value="Cash On Delivery" checked="checked">Cash On Delivery</input>
-    <input type="radio" name="payment_method" value="Bank Transfer">Bank Transfer</input>
-</p>
+    <h4>Select Payment Method</h4>
+    ----------------------------------------------------
+    <br/>
+    <p>
+        <input type="radio" name="payment_method" value="Cash On Delivery" checked="checked">Cash On Delivery</input>
+        <input type="radio" name="payment_method" value="Bank Transfer">Bank Transfer</input>
+    </p>
 
-<br/>
+    <br/>
 
-<input style="background-color: crimson; padding: 10px"
-       type="button"
-       value="Place Order" onclick="placeorder()"/>
-<br/><br/>
-<a href="/">Go To Home</a>
+    <input class="btn btn-success"
+           type="button"
+           value="Place Order" onclick="placeorder()"/>
+
+    <a href="/" class="btn btn-primary">Go To Home</a>
+</div>
 
 <script>
     function placeorder() {
@@ -100,6 +98,8 @@ Contact Number (03003334444): <input type="text" id="contact" name="contact" />
         }
         window.location.href = '/place_order';
     }
+
+
 </script>
 </body>
 </html>
