@@ -2,6 +2,9 @@ import os
 from flask import Flask, render_template, redirect, url_for, request, session
 from flask_session import Session
 import sqlite3
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
 
 app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
@@ -71,12 +74,12 @@ def register():
             conn.close()
             return render_template('register.html', message='user already exists')
         else:
-            e = "date(date('now'), '+6 month')"
+            six_months = date.today() + relativedelta(months=+6)
             conn.execute(
                 'INSERT INTO user (username, password, name, dob, gender, address, '
                 'loyalty_points, loyalty_points_expiry) '
                 'VALUES(?,?,?,?,?,?,?,?)',
-                (username, password, name, dob, gender, address, 0, e))
+                (username, password, name, dob, gender, address, 0, six_months))
             conn.commit()
             conn.close()
         return render_template('login.html', message='user registered successfully')
