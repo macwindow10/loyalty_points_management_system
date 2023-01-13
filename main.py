@@ -285,7 +285,8 @@ def profile():
                                dob=user["dob"],
                                gender=user["gender"],
                                address=user["address"],
-                               total_loyalty_points=user["loyalty_points"])
+                               total_loyalty_points=user["loyalty_points"],
+                               loyalty_points_expiry=user["loyalty_points_expiry"])
 
 
 @app.route('/adminpanel', methods=['GET'])
