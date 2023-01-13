@@ -47,12 +47,14 @@ def create_db():
     con.commit()
 
     cur.execute(
-        "CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, order_date TIMESTAMP)")
+        "CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "user_id INTEGER, order_date TIMESTAMP)")
     print('order')
     con.commit()
 
     cur.execute(
-        "CREATE TABLE IF NOT EXISTS order_detail(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id INTEGER, product_price REAL, quantity INTEGER)")
+        "CREATE TABLE IF NOT EXISTS order_detail(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "product_id INTEGER, product_price REAL, quantity INTEGER)")
     print('order_detail')
     con.commit()
 

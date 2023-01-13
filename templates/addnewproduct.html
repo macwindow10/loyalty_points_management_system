@@ -46,6 +46,7 @@
         }
 
 
+
     </style>
 </head>
 <body>
@@ -58,7 +59,7 @@
 <h2>Add New Product</h2>
 
 <form action="/add_new_product" method="POST" id="form"
-      enctype = "multipart/form-data"
+      enctype="multipart/form-data"
       onsubmit="return onSubmit()">
 
     <select id="select_category" name="select_category">
@@ -76,6 +77,10 @@
     </div>
     <div style="padding: 10px">
         Loyalty Points <input type="number" id="loyalty_points" name="loyalty_points" value="0"/>
+    </div>
+    <div style="padding: 10px">
+        Is Loyalty Points Applicable on this Product?<input type="checkbox" id="loyalty_points_applicable"
+                                                            name="loyalty_points_applicable" checked/>
     </div>
     <div style="padding: 10px">
         Product Image <input type="file" id="product_image" name="product_image"/>
@@ -100,6 +105,7 @@
                 return false
             }
         }
+
 </script>
 </body>
 </html>

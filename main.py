@@ -71,9 +71,12 @@ def register():
             conn.close()
             return render_template('register.html', message='user already exists')
         else:
+            e = "date(date('now'), '+6 month')"
             conn.execute(
-                'INSERT INTO user (username, password, name, dob, gender, address, loyalty_points) VALUES(?,?,?,?,?,?,?)',
-                (username, password, name, dob, gender, address, 0))
+                'INSERT INTO user (username, password, name, dob, gender, address, '
+                'loyalty_points, loyalty_points_expiry) '
+                'VALUES(?,?,?,?,?,?,?,?)',
+                (username, password, name, dob, gender, address, 0, e))
             conn.commit()
             conn.close()
         return render_template('login.html', message='user registered successfully')
@@ -174,7 +177,7 @@ def checkout():
         if not session.get("cart"):
             session["cart"] = []
 
-        #conn = get_db_connection()
+        # conn = get_db_connection()
         order = ''
         cart = session["cart"]
         if len(cart) == 0:
@@ -309,13 +312,20 @@ def add_new_product():
         product_name = request.form.get('name', None)
         price = request.form.get('price', None)
         loyalty_points = request.form.get('loyalty_points', None)
+        loyalty_points_applicable = request.form.get('loyalty_points_applicable', None)
         product_image = request.files['product_image']
         product_image.save(os.path.join('static/images', product_image.filename))
 
+        if loyalty_points_applicable is None:
+            loyalty_points_applicable = 0
+        else:
+            loyalty_points_applicable = 1
+
         conn = get_db_connection()
         conn.execute(
-            'INSERT INTO product (category_id, price, loyalty_points, name, image_path) VALUES(?,?,?,?,?)',
-            (selected_category, price, loyalty_points, product_name, product_image.filename))
+            'INSERT INTO product (category_id, price, loyalty_points, loyalty_points_applicable, name, image_path) '
+            'VALUES(?,?,?,?,?,?)',
+            (selected_category, price, loyalty_points, loyalty_points_applicable, product_name, product_image.filename))
         conn.commit()
         conn.close()
         return redirect(url_for('adminpanel'))
