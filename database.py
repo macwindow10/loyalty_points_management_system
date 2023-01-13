@@ -32,7 +32,7 @@ def create_db():
     cur.execute("INSERT INTO product VALUES(6, 3, 60000, 100, 1, 'Samsung Galaxy S8', 'samsung_galaxy_s8.jpg')")
     cur.execute("INSERT INTO product VALUES(7, 3, 115000, 135, 1, 'iPhone 8', 'iphone_8.jpg')")
     cur.execute("INSERT INTO product VALUES(8, 4, 122000, 0, 0, 'Sony LCD 32 inch', 'sony_lcd_32_inch.jpg')")
-    cur.execute("INSERT INTO product VALUES(9, 5, 1500, 0, 1, 'Men T-Shirt', 'men_t-shirt.jpg')")
+    cur.execute("INSERT INTO product VALUES(9, 5, 1500, 0, 0, 'Men T-Shirt', 'men_t-shirt.jpg')")
     print('product')
     con.commit()
 
@@ -41,8 +41,8 @@ def create_db():
         "username TEXT, name text, password TEXT, "
         "dob TEXT, gender TEXT, address TEXT, "
         "loyalty_points INTEGER, loyalty_points_expiry TEXT)")
-    cur.execute("INSERT INTO user VALUES(1, 'kashif', 'Kashif', '123456', '01/07/1990', 'MALE', 'Lahore', 0)")
-    cur.execute("INSERT INTO user VALUES(2, 'zaheer', 'Zaheer', '123456', '02/09/1995', 'MALE', 'Lahore', 0)")
+    cur.execute("INSERT INTO user VALUES(1, 'kashif', 'Kashif', '123456', '01/07/1990', 'MALE', 'Lahore', 0, date(date('now'), '+6 month'))")
+    cur.execute("INSERT INTO user VALUES(2, 'zaheer', 'Zaheer', '123456', '02/09/1995', 'MALE', 'Lahore', 0, date(date('now'), '+6 month'))")
     print('user')
     con.commit()
 
