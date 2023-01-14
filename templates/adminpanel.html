@@ -44,6 +44,11 @@
             border-radius: 5px;
             padding: 5px;
         }
+        .badge_loyalty_points_not_applicable {
+            background-color: yellow;
+            border-radius: 5px;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -67,9 +72,15 @@
     <span class="badge_category">Category: {{ product['cname'] }}</span>
     <span class="badge_product">Product Name: {{ product['pname'] }}</span>
     <span class="badge_price">Price: {{ product['price'] }} Rs.</span>
+    {% if product['loyalty_points_applicable'] == 1 %}
     <span class="badge_loyalty_points">Loyalty Points: {{ product['loyalty_points'] }}</span>
+    <span class="badge_loyalty_points">Loyalty Points Applicable</span>
+    {% else %}
+    <span class="badge badge_loyalty_points_not_applicable">Loyalty Points NOT Applicable</span>
+    {% endif %}
 
-    <span class="badge_delete"><input type="button" onclick="delete_product({{ product['pid'] }})" value="DELETE PRODUCT" /></span>
+    <span class="badge_delete"><input type="button" onclick="delete_product({{ product['pid'] }})"
+                                      value="DELETE PRODUCT"/></span>
 
 </div>
 
@@ -84,6 +95,8 @@
         function delete_product(id) {
             window.location.href = '/delete_product?id=' + id;
         }
+
+
 </script>
 </body>
 </html>

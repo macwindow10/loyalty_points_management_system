@@ -5,7 +5,6 @@ import sqlite3
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
-
 app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -293,7 +292,9 @@ def profile():
 def adminpanel():
     print('adminpanel')
     conn = get_db_connection()
-    products = conn.execute('SELECT c.name cname, p.id pid, p.name pname, p.price, p.loyalty_points, p.image_path '
+    products = conn.execute('SELECT c.name cname, p.id pid, p.name pname, '
+                            'p.price, p.loyalty_points, p.image_path, '
+                            'p.loyalty_points_applicable '
                             'FROM product p INNER JOIN category c '
                             'ON p.category_id=c.id '
                             'ORDER BY c.id').fetchall()
