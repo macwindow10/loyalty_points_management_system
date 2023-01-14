@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <title>Loyalty Points Management System</title>
+    <script src="static/js/jquery-3.2.1.js"></script>
     <style>
         .topnav {
           background-color: #333;
@@ -34,6 +35,9 @@
         }
 
 
+
+
+
     </style>
 </head>
 <body>
@@ -55,6 +59,17 @@
     ----------------------------------------------------
     <br/>
     {{ order | safe }}
+    <br/>
+
+    <h4>Loyalty Points</h4>
+    ----------------------------------------------------
+    <br/>
+    Available Loyalty Points: <b>{{ user.loyalty_points }}</b>
+    <br/>
+    Loyalty Points will Expire On: <b>{{ user.loyalty_points_expiry }}</b>
+    <br/>
+    Use Loyalty Points in this Purchase Order: <input type="checkbox" id="use_loyalty_points"
+                                                      name="use_loyalty_points"/>
     <br/><br/>
 
     <h4>Shipping Address</h4>
@@ -86,6 +101,10 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+
+    });
+
     function placeorder() {
         contact = document.getElementById("contact");
         if (contact.value.length === 0) {
@@ -96,10 +115,17 @@
             alert('Invalid contact number');
             return false
         }
-        window.location.href = '/place_order';
+
+        var use_loyalty_points = $('input[name="use_loyalty_points"]:checked').val();
+        if (use_loyalty_points)
+            use_loyalty_points = 1;
+        else
+            use_loyalty_points = 0;
+        console.log('use_loyalty_points: ', use_loyalty_points)
+        var payment_method = $('input[name="payment_method"]:checked').val();
+        console.log('payment_method: ', payment_method);
+        //window.location.href = '/place_order?payment_method=' + payment_method;
     }
-
-
 </script>
 </body>
 </html>
