@@ -87,8 +87,8 @@
     ----------------------------------------------------
     <br/>
     <p>
-        <input type="radio" name="payment_method" value="Cash On Delivery" checked="checked">Cash On Delivery</input>
-        <input type="radio" name="payment_method" value="Bank Transfer">Bank Transfer</input>
+        <input type="radio" name="payment_method" value="Cash_On_Delivery" checked="checked">Cash On Delivery</input>
+        <input type="radio" name="payment_method" value="Credit_Card">Credit Card</input>
     </p>
 
     <br/>
@@ -124,7 +124,8 @@
         console.log('use_loyalty_points: ', use_loyalty_points)
         var payment_method = $('input[name="payment_method"]:checked').val();
         console.log('payment_method: ', payment_method);
-        //window.location.href = '/place_order?payment_method=' + payment_method;
+        window.location.href = '/place_order?payment_method=' + payment_method +
+            '&use_loyalty_points=' + use_loyalty_points;
     }
 </script>
 </body>

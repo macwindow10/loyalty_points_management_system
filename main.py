@@ -218,6 +218,7 @@ def place_order():
             session["cart"] = []
 
         payment_method = request.args.get('payment_method', None)
+        use_loyalty_points = request.args.get('use_loyalty_points', None)
 
         conn = get_db_connection()
         user = conn.execute(
