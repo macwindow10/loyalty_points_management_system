@@ -54,7 +54,7 @@ def create_db():
 
     cur.execute(
         "CREATE TABLE IF NOT EXISTS order_detail(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "product_id INTEGER, product_price REAL, quantity INTEGER)")
+        "order_id INTEGER, product_id INTEGER, product_price REAL, quantity INTEGER)")
     print('order_detail')
     con.commit()
 

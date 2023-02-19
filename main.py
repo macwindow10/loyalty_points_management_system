@@ -226,6 +226,13 @@ def place_order():
                 format(user_id=user_id)).fetchone()
         existing_points = int(user["loyalty_points"])
 
+        cur = conn.execute(
+            'INSERT INTO orders (user_id, order_date) '
+            'VALUES(?,?)',
+            (user_id, date.today()))
+        conn.commit()
+        order_id = cur.lastrowid
+
         total_loyalty_points = 0
         product_price_quantity = 0
         total_price = 0
@@ -247,6 +254,12 @@ def place_order():
                     ', Quantity: ' + str(quantity) + \
                     ', Sub Total: ' + str(product_price_quantity) + \
                     ', Loyalty Points: ' + str(points) + '<br />'
+
+            conn.execute(
+                'INSERT INTO order_detail (order_id, product_id, product_price, quantity) '
+                'VALUES(?, ?, ?, ?)',
+                (order_id, product_id, int(product["price"]), quantity))
+            conn.commit()
 
         order = order + 'Total Before Discount: ' + str(total_price) + '<br />'
         discount = int((existing_points / 100) * 10)
