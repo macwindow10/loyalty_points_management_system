@@ -48,7 +48,7 @@ def create_db():
 
     cur.execute(
         "CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "user_id INTEGER, order_date TIMESTAMP)")
+        "user_id INTEGER, credit_card TEXT, order_date TIMESTAMP)")
     print('order')
     con.commit()
 

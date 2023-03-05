@@ -33,11 +33,6 @@
             border-radius: 5px;
             padding: 5px;
         }
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -89,6 +84,7 @@
     <p>
         <input type="radio" name="payment_method" value="Cash_On_Delivery" checked="checked">Cash On Delivery</input>
         <input type="radio" name="payment_method" value="Credit_Card">Credit Card</input>
+        <input type="text" name="credit_card_number" id="credit_card_number" value="4012888888881881"></input>
     </p>
 
     <br/>
@@ -102,11 +98,21 @@
 
 <script>
     $(document).ready(function() {
-
+        $("#credit_card_number").hide();
+        $("input[name='payment_method']").change(function() {
+            var x = $("input[name='payment_method']:checked").val();
+            if (x === "Credit_Card") {
+                $("#credit_card_number").show();
+            } else {
+                $("#credit_card_number").hide();
+            }
+        });
     });
 
     function placeorder() {
         contact = document.getElementById("contact");
+        var credit_card_number = $("#credit_card_number").val();
+        alert(credit_card_number);
         if (contact.value.length === 0) {
             alert('Enter contact number');
             return false
@@ -125,7 +131,8 @@
         var payment_method = $('input[name="payment_method"]:checked').val();
         console.log('payment_method: ', payment_method);
         window.location.href = '/place_order?payment_method=' + payment_method +
-            '&use_loyalty_points=' + use_loyalty_points;
+            '&use_loyalty_points=' + use_loyalty_points +
+            '&credit_card_number=' + credit_card_number;
     }
 </script>
 </body>

@@ -217,8 +217,9 @@ def place_order():
         if not session.get("cart"):
             session["cart"] = []
 
-        payment_method = request.args.get('payment_method', None)
         use_loyalty_points = request.args.get('use_loyalty_points', None)
+        payment_method = request.args.get('payment_method', None)
+        credit_card_number = request.args.get('credit_card_number', None)
 
         conn = get_db_connection()
         user = conn.execute(
@@ -227,9 +228,9 @@ def place_order():
         existing_points = int(user["loyalty_points"])
 
         cur = conn.execute(
-            'INSERT INTO orders (user_id, order_date) '
-            'VALUES(?,?)',
-            (user_id, date.today()))
+            'INSERT INTO orders (user_id, credit_card, order_date) '
+            'VALUES(?,?,?)',
+            (user_id, credit_card_number, date.today()))
         conn.commit()
         order_id = cur.lastrowid
 
